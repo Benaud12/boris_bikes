@@ -11,7 +11,10 @@ class DockingStation
 	end
 
 	def release_bike
-		fail 'No bikes available' if empty? || bikes.last.working? == false
+		fail 'No bikes available' if empty? || bikes.none?{|b| b.working?}
+		while !bikes.last.working?
+			bikes.rotate!
+		end
 		bikes.pop
 	end
 
